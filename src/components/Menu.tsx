@@ -91,6 +91,10 @@ const menuItems = [
       },
     ],
   },
+          // icon: İlgili simgenin dosya yolu.
+          // label: Menüde görüntülenecek metin.
+          // href: Tıklandığında yönlendirilecek bağlantı.
+          // visible: Hangi kullanıcı rollerine bu menü öğesinin görüneceğini belirten bir dizi.
   {
     title: "OTHER",
     items: [
