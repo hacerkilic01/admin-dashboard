@@ -161,5 +161,4 @@ const StudentForm = ({
     </form>
   );
 };
-
 export default StudentForm;
