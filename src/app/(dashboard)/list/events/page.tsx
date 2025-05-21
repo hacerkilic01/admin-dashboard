@@ -2,11 +2,11 @@ import FormContainer from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Class, Event, Prisma } from "@prisma/client";
 import Image from "next/image";
+import { auth } from "@clerk/nextjs/server";
 
 type EventList = Event & { class: Class };
 
@@ -15,6 +15,11 @@ const EventListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
+
+  const { userId, sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const currentUserId = userId;
+
   const columns = [
     {
       header: "Title",
@@ -39,6 +44,14 @@ const EventListPage = async ({
       accessor: "endTime",
       className: "hidden md:table-cell",
     },
+    ...(role === "admin"
+      ? [
+          {
+            header: "Actions",
+            accessor: "action",
+          },
+        ]
+      : []),
   ];
 
   const renderRow = (item: EventList) => (
@@ -59,7 +72,7 @@ const EventListPage = async ({
         })}
       </td>
       <td className="hidden md:table-cell">
-        {item.endTime.toLocaleTimeString("tr-TR", {
+        {item.endTime.toLocaleTimeString("en-US", {
           hour: "2-digit",
           minute: "2-digit",
           hour12: false,
@@ -99,6 +112,22 @@ const EventListPage = async ({
       }
     }
   }
+
+  // ROLE CONDITIONS
+
+  const roleConditions = {
+    teacher: { lessons: { some: { teacherId: currentUserId! } } },
+    student: { students: { some: { id: currentUserId! } } },
+    parent: { students: { some: { parentId: currentUserId! } } },
+  };
+
+  query.OR = [
+    { classId: null },
+    {
+      class: roleConditions[role as keyof typeof roleConditions] || {},
+    },
+  ];
+
   const [data, count] = await prisma.$transaction([
     prisma.event.findMany({
       where: query,

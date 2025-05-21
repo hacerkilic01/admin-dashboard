@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
-import { parentsData, role } from "@/lib/data";
+import { auth } from "@clerk/nextjs/server";
 
 type SubjectList = Subject & { teachers: Teacher[] };
 
@@ -15,6 +15,9 @@ const SubjectListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+
   const columns = [
     {
       header: "Subject Name",
