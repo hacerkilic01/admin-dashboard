@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+
 import FormModal from "./FormModal";
 import { auth } from "@clerk/nextjs/server";
 
@@ -69,6 +70,12 @@ const FormContainer = async ({ table, type, data, id }: FormContainerProps) => {
         });
         relatedData = { lessons: examLessons };
         break;
+        case "parent":
+  const childList = await prisma.student.findMany({
+    select: { id: true, name: true, surname: true },
+  });
+  relatedData = { children: childList };
+  break;
 
       default:
         break;
