@@ -25,12 +25,12 @@ model Student {
   sex         UserSex
   createdAt   DateTime     @default(now())
   parentId    String
-  classId     Int
+  classId     Int?
   gradeId     Int
   birthday    DateTime
   attendances Attendance[]
   results     Result[]
-  class       Class        @relation(fields: [classId], references: [id])
+   class       Class?   @relation(fields: [classId], references: [id],  onDelete: SetNull) 
   grade       Grade        @relation(fields: [gradeId], references: [id])
   parent      Parent       @relation(fields: [parentId], references: [id])
 }
@@ -181,4 +181,14 @@ enum Day {
   WEDNESDAY
   THURSDAY
   FRIDAY
+}
+
+model GameResult {
+  id          String   @id @default(cuid())
+  username    String?
+  score       Int
+  correct     Int
+  incorrect   Int
+  durationSec Int
+  createdAt   DateTime @default(now())
 }
