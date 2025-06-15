@@ -193,11 +193,10 @@ enum Day {
 }
 
 model GameResult {
-  id          String   @id @default(cuid())
-  username    String?
-  score       Int
-  correct     Int
-  incorrect   Int
-  durationSec Int
-  createdAt   DateTime @default(now())
+ id          String   @id @default(cuid())
+ score       Int
+ correct     Int
+ incorrect   Int
+ durationSec Int
+ createdAt   DateTime @default(now())
 }
