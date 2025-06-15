@@ -1,5 +1,4 @@
-export const runtime = "nodejs"
-export const dynamic = "force-dynamic"
+
 import FormContainer from "@/components/FormContainer";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
