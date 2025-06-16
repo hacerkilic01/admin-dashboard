@@ -8,6 +8,8 @@ import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Assignment, Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
+export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
 
 type AssignmentList = Assignment & {
   lesson: {
