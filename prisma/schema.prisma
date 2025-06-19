@@ -194,10 +194,18 @@ enum Day {
 }
 
 model GameResult {
- id          String   @id @default(cuid())
- score       Int
- correct     Int
- incorrect   Int
- durationSec Int
- createdAt   DateTime @default(now())
+  id                   String   @id @default(cuid())
+  playerName           String
+  sessionId            String   @unique
+  sessionStartTime     DateTime
+  sessionEndTime       DateTime
+  totalGameTime        Float
+  totalCorrectAnswers  Int
+  totalWrongAnswers    Int
+  totalScore           Int
+  overallAccuracy      Float
+  gameVersion          String
+  sessionCompleted     Boolean
+  sceneDataList        Json
+  createdAt            DateTime @default(now())
 }

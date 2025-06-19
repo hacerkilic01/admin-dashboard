@@ -66,12 +66,12 @@ const menuItems = [
         href: "/list/results",
         visible: ["admin", "teacher", "student", "parent"],
       },
-      {
-        icon: "/attendance.png",
-        label: "Attendance",
-        href: "/list/attendance",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
+      // {
+      //   icon: "/attendance.png",
+      //   label: "Attendance",
+      //   href: "/list/attendance",
+      //   visible: ["admin", "teacher", "student", "parent"],
+      // },
       {
         icon: "/calendar.png",
         label: "Events",
@@ -96,39 +96,17 @@ const menuItems = [
   // label: Menüde görüntülenecek metin.
   // href: Tıklandığında yönlendirilecek bağlantı.
   // visible: Hangi kullanıcı rollerine bu menü öğesinin görüneceğini belirten bir dizi.
-  {
-    title: "OTHER",
-    items: [
-      {
-        icon: "/profile.png",
-        label: "Profile",
-        href: "/profile",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
-      {
-        icon: "/setting.png",
-        label: "Settings",
-        href: "/settings",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
-      {
-        icon: "/logout.png",
-        label: "Logout",
-        href: "/logout",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
-    ],
-  },
+  
 ];
 
 const Menu = async () => {
   const user = await currentUser();
   const role = user?.publicMetadata.role as string;
   return (
-    <div className="mt-4 text-sm">
+    <div className="mt-4 text-base">
       {menuItems.map((i) => (
         <div className="flex flex-col gap-2" key={i.title}>
-          <span className="hidden lg:block text-gray-400 font-light my-4">
+          <span className="hidden lg:block text-gray-400 font-light my-5">
             {i.title}
           </span>
           {i.items.map((item) => {

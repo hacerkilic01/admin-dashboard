@@ -1,12 +1,16 @@
-// src/components/Scoreboard.tsx
 import { useEffect, useState } from "react";
 
 type GameResult = {
   id: string;
-  score: number;
-  correct: number;
-  incorrect: number;
-  durationSec: number;
+  playerName: string;
+  sessionId: string;
+  totalGameTime: number;
+  totalCorrectAnswers: number;
+  totalWrongAnswers: number;
+  totalScore: number;
+  overallAccuracy: number;
+  gameVersion: string;
+  sessionCompleted: boolean;
   createdAt: string;
 };
 
@@ -15,7 +19,8 @@ export default function Scoreboard() {
 
   const fetchScores = async () => {
     const res = await fetch("/api/game-result");
-    if (res.ok) setScores(await res.json());
+    if (!res.ok) return;
+    setScores(await res.json());
   };
 
   useEffect(() => {
@@ -25,13 +30,22 @@ export default function Scoreboard() {
   }, []);
 
   return (
-    <ul className="space-y-2 p-4">
+    <ul className="space-y-4 p-4">
       {scores.map(r => (
-        <li key={r.id} className="border-b pb-2">
-          <span>Skor: {r.score}</span>{" — "}
-          <span>Doğru: {r.correct}</span>{" — "}
-          <span>Yanlış: {r.incorrect}</span>{" — "}
-          <span>Süre: {r.durationSec}s</span>
+        <li key={r.id} className="border rounded-lg p-3 shadow-sm">
+          <div className="flex justify-between">
+            <span className="font-semibold">{r.playerName}</span>
+            <span className="text-sm text-gray-500">{new Date(r.createdAt).toLocaleString()}</span>
+          </div>
+          <div className="mt-2 text-sm">
+            <p>Session: {r.sessionId}</p>
+            <p>Game Version: {r.gameVersion}</p>
+            <p>Time Played: {r.totalGameTime.toFixed(1)}s</p>
+            <p>Correct: {r.totalCorrectAnswers} — Wrong: {r.totalWrongAnswers}</p>
+            <p>Score: {r.totalScore}</p>
+            <p>Accuracy: {(r.overallAccuracy * 100).toFixed(1)}%</p>
+            <p>Status: {r.sessionCompleted ? "Completed" : "Incomplete"}</p>
+          </div>
         </li>
       ))}
     </ul>
