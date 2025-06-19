@@ -4,6 +4,7 @@ import Announcements from "@/components/Announcements";
 import AttendanceChartContainer from "@/components/AttendanceChartContainer";
 import CountChartContainer from "@/components/CountChartContainer";
 import EventCalendarContainer from "@/components/EventCalendarContainer";
+import GameStatsDashboard from "@/components/GameStatsDashboard";
 // import FinanceChart from "@/components/FinanceChart";
 import UserCard from "@/components/UserCard";
 
@@ -33,7 +34,11 @@ const AdminPage = ({
           <div className="w-full lg:w-2/3 h-[450px]">
             <AttendanceChartContainer />
           </div>
+          
         </div>
+        <div className="w-full h-[450px]">
+            <GameStatsDashboard/>
+          </div>
         {/* BOTTOM CHART */}
         <div className="w-full h-[500px]">
         </div>
