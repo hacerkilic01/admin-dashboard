@@ -49,33 +49,33 @@ export async function POST(request: Request) {
   ];
 
   if (required.some((v) => v == null)) {
-    return new Response(
-      JSON.stringify({ error: "Eksik alan" }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ error: "Eksik alan" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   const result = await prisma.gameResult.create({
     data: {
-      playerName:          body.playerName,
-      sessionId:           body.sessionId,
-      sessionStartTime:    new Date(body.sessionStartTime),
-      sessionEndTime:      new Date(body.sessionEndTime),
-      totalGameTime:       body.totalGameTime,
+      playerName: body.playerName,
+      sessionId: body.sessionId,
+      sessionStartTime: new Date(body.sessionStartTime),
+      sessionEndTime: new Date(body.sessionEndTime),
+      totalGameTime: body.totalGameTime,
       totalCorrectAnswers: body.totalCorrectAnswers,
-      totalWrongAnswers:   body.totalWrongAnswers,
-      totalScore:          body.totalScore,
-      overallAccuracy:     body.overallAccuracy,
-      gameVersion:         body.gameVersion,
-      sessionCompleted:    body.sessionCompleted,
-      sceneDataList:       body.sceneDataList as unknown as Prisma.InputJsonValue,
+      totalWrongAnswers: body.totalWrongAnswers,
+      totalScore: body.totalScore,
+      overallAccuracy: body.overallAccuracy,
+      gameVersion: body.gameVersion,
+      sessionCompleted: body.sessionCompleted,
+      sceneDataList: body.sceneDataList as unknown as Prisma.InputJsonValue,
     },
   });
 
-  return new Response(
-    JSON.stringify(result),
-    { status: 201, headers: { "Content-Type": "application/json" } }
-  );
+  return new Response(JSON.stringify(result), {
+    status: 201,
+    headers: { "Content-Type": "application/json" },
+  });
 }
 
 export async function GET() {
@@ -84,8 +84,8 @@ export async function GET() {
     take: 50,
   });
 
-  return new Response(
-    JSON.stringify(results),
-    { status: 200, headers: { "Content-Type": "application/json" } }
-  );
+  return new Response(JSON.stringify(results), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
 }
